@@ -117,6 +117,12 @@ func (r *Requester) GetJSON(ctx context.Context, endpoint string, responseStruct
 	ar := NewAPIRequest("GET", endpoint, nil)
 	ar.SetHeader("Content-Type", "application/json")
 	ar.Suffix = "api/json"
+	if query == nil {
+		query = map[string]string{"tree": "*[*]"}
+	} else {
+		query["tree"] = "*[*]"
+	}
+
 	return r.Do(ctx, ar, &responseStruct, query)
 }
 
